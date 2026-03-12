@@ -73,7 +73,7 @@ Concepts you should know to fully defend this code:
 
 - Python
 - CLI (Command-line interface)
-- AI model APIs
+- Github models
 - Git and Github
 
 ## Future Improvements
