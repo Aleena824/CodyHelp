@@ -1,3 +1,5 @@
+#CODYHELP V1
+
 import click
 from openai import OpenAI
 import os
@@ -35,8 +37,9 @@ def explain(file, interview):
 
     try:
         response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[{"role": "user", "content": prompt}])
+            model="gpt-4o-mini",
+            messages=[{"role": "user", "content": prompt}]
+        )
 
         click.echo(response.choices[0].message.content)
 
@@ -62,10 +65,40 @@ def review(file):
 
     try:
         response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[{"role": "user", "content": prompt}])
+            model="gpt-4o-mini",
+            messages=[{"role": "user", "content": prompt}]
+        )
 
         click.echo(response.choices[0].message.content)
 
     except Exception as e:
         click.echo(f"Error while calling API: {str(e)}")
+
+#Error explanation through stacktraces
+
+@main.command()
+@click.argument("file")
+
+def stacktrace(file):
+    try:
+        with open(file,"r") as f:
+            code=f.read()
+    except FileNotFoundError:
+        click.echo(f"Error: File '{file}' not found. ")
+        return
+    
+    prompt= f"You are a helpful coding assistant, explain errors in my code in simple words in the format:\n Error:\n What went wrong:\n Suggested fix:\n Concept to review:\n\n{code}"
+
+    click.echo("\n ANALYSING..\n")
+
+    try:
+        response=client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[{"role":"user", "content":prompt}]
+        )
+        
+        click.echo(response.choices[0].message.content)
+
+    except Exception as e:
+        click.echo(f"Error while calling API: {str(e)}")
+    
