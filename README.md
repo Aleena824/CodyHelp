@@ -24,6 +24,9 @@ CodyHelp was built to fix that. It's the tool I wish I had when I started coding
 ## Installation
 pip install codyhelp
 
+[Windows users: Make sure Python is added to PATH during installation, 
+or run: pip install codyhelp --user]
+
 ## Setup
 1. Get a free GitHub Models token at github.com/marketplace/models
 2. Set your token:
