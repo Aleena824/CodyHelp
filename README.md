@@ -1,4 +1,6 @@
 # CodyHelp
+[![PyPI version](https://badge.fury.io/py/codyhelp.svg)](https://pypi.org/project/codyhelp/)
+
 CodyHelp is a command-line interface tool that can analyse source code files, provide explanations, detect possible bugs, and suggest improvements.
 
 Built for CS students and junior developers who are tired of switching between browser tabs, forgetting syntax, and blanking out when asked "can you walk me through this code?"
