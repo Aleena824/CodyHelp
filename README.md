@@ -19,6 +19,22 @@ CodyHelp was built to fix that. It's the tool I wish I had when I started coding
 * Error explanation from stack traces
 * Support multiple programming languages
 
+## Installation
+pip install codyhelp
+
+## Setup
+1. Get a free GitHub Models token at github.com/marketplace/models
+2. Set your token:
+   - Windows: $env:GITHUB_TOKEN="your_token_here"
+   - Mac/Linux: export GITHUB_TOKEN="your_token_here"
+3. You're ready to use it!
+
+## Usage
+codyhelp explain main.py
+codyhelp explain main.py --interview
+codyhelp review main.py
+codyhelp stacktrace error.txt
+
 ## Example:
 **Run CodyHelp from the terminal:**
 
@@ -62,4 +78,3 @@ Concepts you should know to fully defend this code:
 - [ ] Git diff code review
 - [ ] Repository-level code understanding
 - [ ] Leetcode practice suggestions
-- [ ] Packaging as a pip-installable tool
