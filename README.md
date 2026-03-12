@@ -31,8 +31,11 @@ pip install codyhelp
 
 ## Usage
 codyhelp explain main.py
+
 codyhelp explain main.py --interview
+
 codyhelp review main.py
+
 codyhelp stacktrace error.txt
 
 ## Example:
