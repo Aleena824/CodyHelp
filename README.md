@@ -16,6 +16,8 @@ CodyHelp was built to fix that. It's the tool I wish I had when I started coding
 * Interview mode code explanation
 * Detect possible bugs in code
 * Review code and suggest improvements
+* Error explanation from stack traces
+* Support multiple programming languages
 
 ## Example:
 **Run CodyHelp from the terminal:**
@@ -59,5 +61,5 @@ Concepts you should know to fully defend this code:
 
 - [ ] Git diff code review
 - [ ] Repository-level code understanding
-- [ ] Error explanation from stack traces
+- [ ] Leetcode practice suggestions
 - [ ] Packaging as a pip-installable tool
