@@ -4,6 +4,8 @@ import click
 from openai import OpenAI
 import os
 
+from codyhelp.prompts import explain_prompt, interview_prompt, review_prompt, stacktrace_prompt
+
 api_key=os.environ.get("GITHUB_TOKEN")
 if not api_key:
     raise EnvironmentError("GITHUB_TOKEN environment variable is not set.")
@@ -29,9 +31,9 @@ def explain(file, interview):
         return
 
     if interview:
-        prompt = f"Explain this code as if I need to defend it in a job interview. Include: how to explain it verbally, time/space complexity, likely follow-up questions, and key concepts to know.\n\n{code}"
+        prompt = interview_prompt(code)
     else:
-        prompt = f"Explain what this code does in simple terms:\n\n{code}"
+        prompt = explain_prompt(code)
 
     click.echo("\n ANALYSING...\n")
 
@@ -59,7 +61,7 @@ def review(file):
         click.echo(f"Error: File '{file}' not found.")
         return
     
-    prompt = f"Review this code and detect possible bugs. For each bug found, label it with a severity level: [HIGH], [MEDIUM], or [LOW]. Then suggest improvements.\n\n{code}"
+    prompt = review_prompt(code)
 
     click.echo("\n ANALYSING...\n")
 
@@ -82,14 +84,14 @@ def review(file):
 def stacktrace(file):
     try:
         with open(file,"r") as f:
-            code=f.read()
+            error=f.read()
     except FileNotFoundError:
         click.echo(f"Error: File '{file}' not found. ")
         return
     
-    prompt= f"You are a helpful coding assistant, explain errors in my code in simple words in the format:\n Error:\n What went wrong:\n Suggested fix:\n Concept to review:\n\n{code}"
+    prompt= stacktrace_prompt(error)
 
-    click.echo("\n ANALYSING..\n")
+    click.echo("\n ANALYSING...\n")
 
     try:
         response=client.chat.completions.create(
