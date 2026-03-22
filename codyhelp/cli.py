@@ -4,7 +4,8 @@ import click
 from openai import OpenAI
 import os
 
-from codyhelp.prompts import explain_prompt, interview_prompt, review_prompt, stacktrace_prompt, leetcode_prompt
+from codyhelp.prompts import explain_prompt, interview_prompt, review_prompt, stacktrace_prompt, leetcode_prompt, gitdiff_prompt
+import subprocess #for gitdiff command
 
 api_key=os.environ.get("GITHUB_TOKEN")
 if not api_key:
@@ -133,5 +134,28 @@ def leetcode(file):
 
         click.echo(response.choices[0].message.content)
     
+    except Exception as e:
+        click.echo(f"Error while calling API: {str(e)}")
+
+#gitdiff feature compares old file to new file and makes suggestions on the changes made before pushing to GitHub
+
+@main.command()
+
+def gitdiff():
+    """Review your uncommitted changes before pushing to GitHub."""
+    result = subprocess.run(["git", "diff"], capture_output=True, text=True, encoding="utf-8")#utf-8 is windows default encoding
+    diff = result.stdout
+
+    if diff=="":
+        click.echo(f"No changes have been made to the file.")
+    else:
+        prompt = gitdiff_prompt(diff)
+    click.echo("\n ANALYSING...\n")
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[{"role": "user", "content": prompt}]
+        )
+        click.echo(response.choices[0].message.content)
     except Exception as e:
         click.echo(f"Error while calling API: {str(e)}")
