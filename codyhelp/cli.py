@@ -23,6 +23,7 @@ def main():
 @click.option("--interview", is_flag=True, help="Explain in interview mode")
 
 def explain(file, interview):
+    """Explain a code file."""
     try:
         with open(file, "r") as f:
             code = f.read()
@@ -54,6 +55,7 @@ def explain(file, interview):
 @click.argument("file")
 
 def review(file):
+    """Review code and detect bugs with severity levels."""
     try:
         with open (file,"r") as f:
             code=f.read()
@@ -82,6 +84,7 @@ def review(file):
 @click.argument("file")
 
 def stacktrace(file):
+    """Explain errors and suggest fixes from a stack trace file."""
     try:
         with open(file,"r") as f:
             error=f.read()
