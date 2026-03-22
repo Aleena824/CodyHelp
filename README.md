@@ -20,6 +20,9 @@ CodyHelp was built to fix that. It's the tool I wish I had when I started coding
 * Review code and suggest improvements
 * Error explanation from stack traces
 * Support multiple programming languages
+* Git diff code review
+* Repository-level code understanding
+* Leetcode practice suggestions
 
 ## Installation
 pip install codyhelp
@@ -83,6 +86,6 @@ Concepts you should know to fully defend this code:
 
 ## Future Improvements
 
-- [ ] Git diff code review
-- [ ] Repository-level code understanding
-- [ ] Leetcode practice suggestions
+- [x] Git diff code review
+- [x] Repository-level code understanding
+- [x] Leetcode practice suggestions
