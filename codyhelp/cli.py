@@ -1,10 +1,10 @@
-#CODYHELP V1
+#CODYHELP FEATURES
 
 import click
 from openai import OpenAI
 import os
 
-from codyhelp.prompts import explain_prompt, interview_prompt, review_prompt, stacktrace_prompt
+from codyhelp.prompts import explain_prompt, interview_prompt, review_prompt, stacktrace_prompt, leetcode_prompt
 
 api_key=os.environ.get("GITHUB_TOKEN")
 if not api_key:
@@ -106,4 +106,32 @@ def stacktrace(file):
 
     except Exception as e:
         click.echo(f"Error while calling API: {str(e)}")
+
+#Suggesting leetcode questions based on concept
+
+@main.command()
+@click.argument("file")
+
+def leetcode(file):
+    """Suggests leetcode questions based on the concepts used in the code"""
+    try:
+        with open(file,"r") as f:
+            code=f.read()
+    except FileNotFoundError:
+        click.echo(f"Error: File {file} not found.")
+        return
     
+    prompt = leetcode_prompt(code)
+
+    click.echo("\nANALYSING..\n")
+
+    try:
+        response=client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[{"role":"user", "content": prompt}]
+        )
+
+        click.echo(response.choices[0].message.content)
+    
+    except Exception as e:
+        click.echo(f"Error while calling API: {str(e)}")

@@ -11,3 +11,6 @@ def review_prompt(code):
 
 def stacktrace_prompt(error):
     return f"You are a helpful coding assistant, explain errors in my code in simple words in the format:\n Error:\n What went wrong:\n Suggested fix:\n Concept to review:\n\n{error}"
+
+def leetcode_prompt(code):
+    return f"Analyse this code and suggest LeetCode practice problems based on the concepts used. Format your response exactly like this:\n\n LEETCODE PRACTICE\n\n🟢 Easy:\n -> Problem name (#number) - Concept\n\n🟡 Medium:\n -> Problem name (#number) - Concept\n\n🔴 Hard:\n -> Problem name (#number) - Concept\n\nCode:\n\n{code}"
