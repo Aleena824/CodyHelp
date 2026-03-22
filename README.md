@@ -30,6 +30,11 @@ pip install codyhelp
 [Windows users: Make sure Python is added to PATH during installation, 
 or run: pip install codyhelp --user]
 
+## Upgrading
+If you already have CodyHelp installed, upgrade to the latest version:
+
+pip install --upgrade codyhelp
+
 ## Setup
 1. Get a free GitHub Models token at github.com/marketplace/models
 2. Set your token:
