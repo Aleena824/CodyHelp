@@ -4,7 +4,7 @@ import click
 from openai import OpenAI
 import os
 
-from codyhelp.prompts import explain_prompt, interview_prompt, review_prompt, stacktrace_prompt, leetcode_prompt, gitdiff_prompt
+from codyhelp.prompts import explain_prompt, interview_prompt, review_prompt, stacktrace_prompt, leetcode_prompt, gitdiff_prompt, repo_prompt
 import subprocess #for gitdiff command
 
 api_key=os.environ.get("GITHUB_TOKEN")
@@ -159,3 +159,37 @@ def gitdiff():
         click.echo(response.choices[0].message.content)
     except Exception as e:
         click.echo(f"Error while calling API: {str(e)}")
+
+#Analyses all files in the project to give a high-level understanding of the whole code in the repository
+
+extensions = (".py", ".js", ".java", ".cpp", ".c", ".ts", ".m", ".ml")
+
+@main.command()
+def repo():
+    """All files in the repository are analysed and a full description is given"""
+    combined_code = ""
+    for root, dirs, files in os.walk("."):
+        filtered = []
+        for d in dirs:
+            if d not in ["venv", "__pycache__", ".git", "build", "dist"]:
+                filtered.append(d)
+        dirs[:] = filtered #this ensures that only necessary code is analysed by the API model by skipping folders in the list 'filtered'
+        for file in files:
+            if file.endswith(extensions):
+                filepath = os.path.join(root, file)
+                with open(filepath, "r", encoding="utf-8") as f:
+                    combined_code += f"\n\n File: {filepath}\n{f.read()}"
+    
+    if combined_code=="":
+        click.echo(f"The repository is empty.")
+    else:
+        prompt = repo_prompt(combined_code)
+        click.echo("\n ANALYSING...\n")
+        try:
+            response = client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[{"role": "user", "content": prompt}]
+            )
+            click.echo(response.choices[0].message.content)
+        except Exception as e:
+            click.echo(f"Error while calling API: {str(e)}")

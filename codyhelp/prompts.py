@@ -17,3 +17,6 @@ def leetcode_prompt(code):
 
 def gitdiff_prompt(diff):
     return f"Analyse the code and compare the changes made to the file. Format the response as:\n\n✅ Good changes:\n\n⚠️ Potential issues:\n\n💡 Suggestions:\n\n{diff}"
+
+def repo_prompt(code):
+    return f"Analyse the whole code and explain how this repository works. Format your response as:\n\n📁 Repository Overview:\n\n📂 File Breakdown:\n\n🔗 How the files connect:\n\n💡 Key concepts used:\n\n{code}"
