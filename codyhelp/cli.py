@@ -150,15 +150,15 @@ def gitdiff():
         click.echo(f"No changes have been made to the file.")
     else:
         prompt = gitdiff_prompt(diff)
-    click.echo("\n ANALYSING...\n")
-    try:
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[{"role": "user", "content": prompt}]
-        )
-        click.echo(response.choices[0].message.content)
-    except Exception as e:
-        click.echo(f"Error while calling API: {str(e)}")
+        click.echo("\n ANALYSING...\n")
+        try:
+            response = client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[{"role": "user", "content": prompt}]
+            )
+            click.echo(response.choices[0].message.content)
+        except Exception as e:
+            click.echo(f"Error while calling API: {str(e)}")
 
 #Analyses all files in the project to give a high-level understanding of the whole code in the repository
 
